@@ -43,7 +43,7 @@ function deleteById($id)
 }
 
 
-function editById($id, $updatedEmployee)
+function editById($updatedEmployee)
 {
   $conn = connectionDB();
   $sql = "UPDATE employees SET
@@ -52,16 +52,8 @@ function editById($id, $updatedEmployee)
     birth_date ='".$updatedEmployee['birthday']."',
     hired_date ='".$updatedEmployee['hiredDate']."',
     job_title ='".$updatedEmployee['jobTitle']."',
-    salary ='".$updatedEmployee['salary']."' WHERE id =" . $id;
+    salary ='".$updatedEmployee['salary']."' WHERE id =" . $updatedEmployee['id'];
 
-  echo $id;
-  // $result = mysqli_query($conn, $sql);
-
-  // if ($result) {
-  //   echo var_dump($result);
-  // } else {
-  //   echo mysqli_error($conn);
-  // }
-  // echo mysqli_query($conn, $sql);
-  // $conn->close();
+  return mysqli_query($conn, $sql);
+  $conn->close();
 }

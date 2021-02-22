@@ -81,6 +81,20 @@ function createTravel()
   }
 }
 
+function editTravel()
+{
+    if ($_SERVER['REQUEST_METHOD'] == "PUT") {
+        $data = json_decode(file_get_contents('php://input'), true);
+        if(editById($data)) {
+            http_response_code(200);
+        } else {
+            http_response_code(400);
+        }
+    } else {
+        $result = getById($_GET['id']);
+        renderTravel($result->fetch_assoc(), array());
+    }
+}
 
 function deleteTravel()
 {

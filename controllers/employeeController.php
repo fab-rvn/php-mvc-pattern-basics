@@ -84,7 +84,11 @@ function editEmployee()
 
     if ($_SERVER['REQUEST_METHOD'] == "PUT") {
         $data = json_decode(file_get_contents('php://input'), true);
-        editById($_GET['id'], $data);
+        if(editById($data)) {
+            http_response_code(200);
+        } else {
+            http_response_code(400);
+        }
     } else {
         renderEmployee($result->fetch_assoc());
     }

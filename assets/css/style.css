@@ -1,0 +1,16 @@
+
+
+input.form-control[readonly] {
+    background-color: white;
+    cursor: default;
+}
+
+select.form-control[readonly] {
+    background-color: white;
+    cursor: default;
+}
+
+textarea.form-control[readonly] {
+    background-color: white;
+    cursor: default;
+}

@@ -9,6 +9,7 @@ function renderEmployee($row = [])
   echo
   '
     <form
+      employee
       action="index.php?controller=employee&action=createEmployee"
       class="'.(isset($_GET['modify']) ? "edit" : "").'"
       method="POST"
@@ -18,13 +19,13 @@ function renderEmployee($row = [])
         <div class="form-group col-md-6">
           <label for="firstName">First Name</label>
           <input
+            '.(isset($_GET['modify']) ? "" : "readonly").'
             type="text"
             class="form-control"
             id="firstName"
             name="firstName"
             placeholder="First Name"
-            value="' . (isset($_GET['id']) ? $row["first_name"] : "") . '
-          ">
+            value="' . (isset($_GET['id']) ? $row["first_name"] : "") . '">
         </div>
         <div class="form-group col-md-6">
           <label for="lastName">Last Name</label>
@@ -34,8 +35,7 @@ function renderEmployee($row = [])
             id="lastName"
             name="lastName"
             placeholder="Last Name"
-            value="' . (isset($_GET['id']) ? $row["last_name"] : "") . '
-          ">
+            value="' . (isset($_GET['id']) ? $row["last_name"] : "") . '">
         </div>
       </div>
       <div class="form-row">
@@ -47,8 +47,7 @@ function renderEmployee($row = [])
             id="birthday"
             name="birthday"
             placeholder="2020-01-01"
-            value="' . (isset($_GET['id']) ? $row["birth_date"] : "") . '
-          ">
+            value="' . (isset($_GET['id']) ? $row["birth_date"] : "") . '">
         </div>
         <div class="form-group col-md-6">
           <label for="dateFrom">Hired Date</label>
@@ -58,8 +57,7 @@ function renderEmployee($row = [])
             id="hiredDate"
             name="hiredDate"
             placeholder="2020-01-01"
-            value="' . (isset($_GET['id']) ? $row["hired_date"] : "") . '
-          ">
+            value="' . (isset($_GET['id']) ? $row["hired_date"] : "") . '">
         </div>
       </div>
       <div class="form-row">
@@ -71,8 +69,7 @@ function renderEmployee($row = [])
             id="jobTitle"
             name="jobTitle"
             placeholder="Job Title"
-            value="' . (isset($_GET['id']) ? $row["job_title"] : "") . '
-          ">
+            value="' . (isset($_GET['id']) ? $row["job_title"] : "") . '">
         </div>
         <div class="form-group col-md-4">
           <label for="salaries">Salary</label>
@@ -82,8 +79,7 @@ function renderEmployee($row = [])
             id="salary"
             name="salary"
             placeholder="30.000"
-            value="' . (isset($_GET['id']) ? $row["salary"] : "") . '
-          ">
+            value="' . (isset($_GET['id']) ? $row["salary"] : "") . '">
         </div>
       </div>
       <button type="submit" class="btn btn-success mr-2">Submit</button>

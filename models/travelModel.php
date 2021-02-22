@@ -80,3 +80,18 @@ function insertEmnployeesForTravel($id, $employeesId)
   mysqli_query($conn, $sql);
   $conn->close();
 }
+
+function editById($updatedTravel)
+{
+  $conn = connectionDB();
+  $sql = "UPDATE travels SET
+    date_from ='".$updatedTravel['dateFrom']."',
+    date_to ='". $updatedTravel['dateTo']."',
+    place_from ='".$updatedTravel['placeFrom']."',
+    place_to ='".$updatedTravel['placeTo']."',
+    budget ='".$updatedTravel['budget']."',
+    reason ='".$updatedTravel['reason']."' WHERE id =" . $updatedTravel['id'];
+
+  return mysqli_query($conn, $sql);
+  $conn->close();
+}

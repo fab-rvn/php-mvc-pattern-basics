@@ -29,7 +29,7 @@ function renderTravelsDashboard($result)
       <td>'.$row["place_to"] .'</td>
       <td>'.$row["reason"].'</td>
       <td><a href='."index.php?controller=travel&action=getTravel&id=$id".' class="btn btn-primary">View</a></td>
-      <td><a href='."index.php?controller=travel&action=editTravel&id=$id".' class="btn btn-info">Edit</a></td>
+      <td><a href='."index.php?controller=travel&action=editTravel&modify=true&id=$id".' class="btn btn-info">Edit</a></td>
       <td><a href='."index.php?controller=travel&action=deleteTravel&id=$id".' class="btn btn-danger">Delete</a></td>
     </tr>';
   }
