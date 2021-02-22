@@ -11,7 +11,9 @@ function renderEmployeeDashboard($result)
           <th scope="col">Last Name</th>
           <th scope="col">Birthday</th>
           <th scope="col">Role</th>
-          <th scope="col">Profile</th>
+          <th scope="col">View</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>';
@@ -26,7 +28,10 @@ function renderEmployeeDashboard($result)
       <td>'.$row["last_name"] .'</td>
       <td>'.$row["birth_date"].'</td>
       <td>'.$row["job_title"] .'</td>
-      <td><a href='."index.php?controller=employee&action=getEmployee&id=$id".'>view employee</a></td>
+      <td><a href='."index.php?controller=employee&action=getEmployee&id=$id".' class="btn btn-primary">View</a></td>
+      <td><a href='."index.php?controller=employee&action=editEmployee&id=$id&modify=true".' class="btn btn-info">Edit</a></td>
+      <td><a href='."index.php?controller=employee&action=deleteEmployee&id=$id".' class="btn btn-danger">Delete</a></td>
+
     </tr>';
   }
 

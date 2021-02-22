@@ -12,7 +12,9 @@ function renderTravelsDashboard($result)
         <th scope="col">Place From</th>
         <th scope="col">Place To</th>
         <th scope="col">Reason</th>
-        <th scope="col">Details</th>
+        <th scope="col">View</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>';
@@ -26,7 +28,9 @@ function renderTravelsDashboard($result)
       <td>'.$row["place_from"] .'</td>
       <td>'.$row["place_to"] .'</td>
       <td>'.$row["reason"].'</td>
-      <td><a href='."index.php?controller=travel&action=getTravel&id=$id".'>view travel</a></td>
+      <td><a href='."index.php?controller=travel&action=getTravel&id=$id".' class="btn btn-primary">View</a></td>
+      <td><a href='."index.php?controller=travel&action=editTravel&id=$id".' class="btn btn-info">Edit</a></td>
+      <td><a href='."index.php?controller=travel&action=deleteTravel&id=$id".' class="btn btn-danger">Delete</a></td>
     </tr>';
   }
 

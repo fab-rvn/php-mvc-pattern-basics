@@ -14,7 +14,7 @@ if (isset($_GET['action']) && function_exists($_GET['action'])) {
 
 // * This function calls the corresponding model function and includes the corresponding view
 
-function getAllEmployees()
+function displayEmployees()
 {
     $result = getAll();
 
@@ -60,22 +60,33 @@ function createEmployee()
 
         if (!$error) {
 
-            $newEmployee = array(
-                'first_name' => $_POST['firstName'],
-                'last_name' => $_POST['lastName'],
-                'birth_date' => $_POST['birthday'],
-                'hired_date' => $_POST['hiredDate'],
-                'job_title' => $_POST['jobTitle'],
-                'salary' => $_POST['salary']
-            );
-
-            insertNew($newEmployee);
-            getAllEmployees();
+            insertNew($_POST);
+            displayEmployees();
 
         } else {
             error("All field are required!");
             header("Refresh:2.0; url=index.php?controller=employee&action=createEmployee");
         }
+    }
+}
+
+
+function deleteEmployee()
+{
+    deleteById($_GET['id']);
+    displayEmployees();
+}
+
+
+function editEmployee()
+{
+    $result = getById($_GET['id']);
+
+    if ($_SERVER['REQUEST_METHOD'] == "PUT") {
+        $data = json_decode(file_get_contents('php://input'), true);
+        editById($_GET['id'], $data);
+    } else {
+        renderEmployee($result->fetch_assoc());
     }
 }
 

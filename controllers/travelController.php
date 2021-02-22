@@ -14,7 +14,7 @@ if (isset($_GET['action']) && function_exists($_GET['action'])) {
 
 // * This function calls the corresponding model function and includes the corresponding view
 
-function getAllTravels()
+function displayTravels()
 {
   $result = getAll();
 
@@ -29,10 +29,11 @@ function getAllTravels()
 function getTravel()
 {
   $result = getById($_GET['id']);
+  $travelEmployees = getEmployeesForTravel($_GET['id']);
 
   if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    renderTravel($row);
+    renderTravel($row, $travelEmployees);
   } else {
     error("Travel was not found!");
   }
@@ -42,8 +43,8 @@ function getTravel()
 function createTravel()
 {
   if ($_SERVER['REQUEST_METHOD'] == "GET") {
-
-    renderTravel();
+    $employees = getEmployees();
+    renderTravel("", $employees);
 
   } elseif ($_SERVER['REQUEST_METHOD'] == "POST") {
 
@@ -69,14 +70,22 @@ function createTravel()
         'reason' => $_POST['reason']
       );
 
-      insertNew($newTravel);
-      getAllTravels();
+      $travelId = insertNew($newTravel);
+      insertEmnployeesForTravel($travelId, $_POST['employees']);
+      displayTravels();
 
     } else {
       error("All field are required!");
       header("Refresh:2.0; url=index.php?controller=travel&action=createTravel");
     }
   }
+}
+
+
+function deleteTravel()
+{
+  deleteById($_GET['id']);
+  displayTravels();
 }
 
 // * This function includes the error view with a message
