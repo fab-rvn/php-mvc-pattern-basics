@@ -1,35 +1,64 @@
 <?php
 
 require_once MODELS . "employeeModel.php";
+require CONTROLLERS . "errorController.php";
 
-//OBTAIN THE ACCION PASSED IN THE URL AND EXECUTE IT AS A FUNCTION
-
-//Keep in mind that the function to be executed has to be one of the ones declared in this controller
-// TODO Implement the logic
-
-
-/* ~~~ CONTROLLER FUNCTIONS ~~~ */
-
-/**
- * This function calls the corresponding model function and includes the corresponding view
- */
-function getAllEmployees()
-{
-    //
+if (isset($_GET['action']) && function_exists($_GET['action'])) {
+    call_user_func($_GET['action']);
+} else {
+    error($errorMsg);
 }
 
-/**
- * This function calls the corresponding model function and includes the corresponding view
- */
-function getEmployee($request)
+function displayDashboard()
 {
-    //
+    $employees = getAll();
+    require VIEWS . "employee/employeeDashboard.php";
 }
 
-/**
- * This function includes the error view with a message
- */
-function error($errorMsg)
+
+function displayEmployee()
 {
-    require_once VIEWS . "/error/error.php";
+    $employee = getById($_GET['id']);
+    if (!$employee) {
+        error(1);
+    }
+    $travels = getTravelsForEmployee($_GET['id']);
+    require VIEWS . "employee/employee.php";
+}
+
+
+function createEmployee()
+{
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        $requiredFields = array('firstName', 'lastName', 'birthday', 'hiredDate', 'jobTitle', 'salary');
+        foreach ($requiredFields as $field) {
+            if (empty($_POST[$field])) {
+                error("Cannot create employee with empty ".$field."");
+                die();
+            }
+        }
+
+        $result = insertNew($_POST);
+        if($result) {
+            header("Location: index.php?controller=employee&action=displayDashboard");
+        } else {
+            error("Cannot create employee");
+        }
+    }
+}
+
+
+function deleteEmployee()
+{
+    deleteById($_GET['id']);
+    header("Location: index.php?controller=employee&action=displayDashboard");
+}
+
+
+function editEmployee()
+{
+    if ($_SERVER['REQUEST_METHOD'] == "PUT") {
+        $data = json_decode(file_get_contents('php://input'), true);
+        editById($data);
+    }
 }

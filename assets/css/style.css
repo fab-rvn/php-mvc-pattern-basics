@@ -1,0 +1,55 @@
+.modal-wrapper {
+    position: fixed;
+    z-index: 1;
+    background-color: #17252a38;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.modal-wrapper.appearing {
+    animation: fadeIn 0.3s forwards;
+}
+
+.modal-wrapper.disappearing {
+    animation: fadeOut 0.3s forwards;
+}
+
+.centered-modal {
+    position: fixed;
+	top: 50%;
+	left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.employee-modal {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+input.form-control[readonly] {
+    background-color: white;
+    cursor: default;
+}
+
+select.form-control[readonly] {
+    background-color: white;
+    cursor: default;
+}
+
+textarea.form-control[readonly] {
+    background-color: white;
+    cursor: default;
+}
+
+a {
+    cursor: pointer;
+}
+
+.error-msg {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
