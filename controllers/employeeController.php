@@ -45,6 +45,7 @@ function createEmployee()
             header("Location: index.php?controller=employee&action=displayDashboard");
         } else {
             header("Location: index.php?controller=employee&action=displayDashboard&error=createEmp");
+            die();
         }
     }
 }

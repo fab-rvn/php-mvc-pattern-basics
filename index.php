@@ -16,4 +16,4 @@ if (isset($_GET['controller'])) {
   include "./views/main/main.php";
 }
 
-require CONTROLLERS . "errorController.php";
+require_once CONTROLLERS . "errorController.php";

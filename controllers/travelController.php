@@ -31,6 +31,15 @@ function displaytravel()
 function createTravel()
 {
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+    $requiredFields = array('dateFrom', 'dateTo', 'placeFrom', 'placeTo', 'budget', 'employees');
+    foreach ($requiredFields as $field) {
+        if (empty($_POST[$field])) {
+            header("Location: index.php?controller=travel&action=displayDashboard&error=emptyFields");
+            die();
+        }
+    }
+
     $travelId = insertNew($_POST);
     insertEmnployeesForTravel($travelId, $_POST['employees']);
     header("Location: index.php?controller=travel&action=displayDashboard");
