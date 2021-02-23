@@ -87,8 +87,8 @@
           </div>
           <div class="form-group col-md-6">
             <label for="travels">Travels</label><br>
-            <?php join("<br>", array_map(function($travel) {
-              return '<a href="index.php?controller=travel&action=echoTravel&id='.$travel['id'].'">'
+            <?php echo join("<br>", array_map(function($travel) {
+              return '<a href="index.php?controller=travel&action=displayTravel&id='.$travel['id'].'">'
               . $travel['date_from'] . ' - ' . $travel['place_to'] .'</a>';
             }, $travels));
             ?>

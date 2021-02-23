@@ -4,8 +4,8 @@ export function openModal(modal) {
 	const newModalWrapper = document.createElement('div');
 	newModalWrapper.className = 'modal-wrapper appearing';
 
-	newModalWrapper.addEventListener('click', closeModalOnClickOut);
 	newModalWrapper.addEventListener('animationend', removeAppearingClass);
+	newModalWrapper.addEventListener('click', closeModalOnClickOut);
 
 	if (modal.classes) {
 		modal.classes.forEach((className) => {
