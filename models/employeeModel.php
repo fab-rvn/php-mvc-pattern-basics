@@ -16,9 +16,13 @@ function getById($id)
 {
   $conn = connectionDB();
   $sql = "SELECT * FROM employees WHERE id = $id";
-  $result = mysqli_query($conn, $sql);
-  $conn->close();
-  return $result->fetch_assoc();
+  try {
+    $result = mysqli_query($conn, $sql);
+    $conn->close();
+    return $result->fetch_assoc();
+  } catch (Exception $err) {
+    return false;
+  }
 }
 
 

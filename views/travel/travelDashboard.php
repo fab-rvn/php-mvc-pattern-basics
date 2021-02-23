@@ -31,17 +31,21 @@
         </tr>
       </thead>
       <tbody>
-      <?php  foreach( $travels as $row) {
-        $id = $row['id']; ?>
-        <tr>
-          <td><?= $row["id"] ?> </td>
-          <td><?= $row["place_from"] ?> </td>
-          <td><?= $row["place_to"] ?> </td>
-          <td><?= $row["reason"] ?> </td>
-          <td><a href="index.php?controller=travel&action=displayTravel&id=$id" class="btn btn-primary">View</a></td>
-          <td><a data-id=<?=$row['id']?> class="editTravel btn btn-info">Edit</a></td>
-          <td><a href="index.php?controller=travel&action=deleteTravel&id=$id" class="btn btn-danger">Delete</a></td>
-        </tr>
+        <?php
+        foreach( $travels as $row) {
+          $id = $row['id'];
+          echo
+          '<tr>
+            <td>'. $row["id"] .' </td>
+            <td>' . $row["place_from"] .' </td>
+            <td>' . $row["place_to"] .' </td>
+            <td> '. $row["reason"] .' </td>
+            <td><a href="index.php?controller=travel&action=displayTravel&id='.$id.'" class="btn btn-primary">View</a></td>
+            <td><a data-id="'. $id .'" class="editTravel btn btn-info">Edit</a></td>
+            <td><a href="index.php?controller=travel&action=deleteTravel&id='.$id.'" class="btn btn-danger">Delete</a></td>
+        </tr>';
+        }
+        ?>
       </tbody>
     </table>
     <a id="createTrav" class="btn btn-success mt-2 mr-1">Create</a>

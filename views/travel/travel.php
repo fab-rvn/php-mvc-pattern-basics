@@ -23,7 +23,7 @@
             id="placeFrom"
             name="placeFrom"
             placeholder="Barcelona, Spain"
-            value=<?=$row[" place_from"]?> >
+            value="<?=$travel["place_from"] ?>">
         </div>
         <div class="form-group col-md-4">
           <label for="placeTo">Destination</label>
@@ -34,7 +34,7 @@
             id="placeTo"
             name="placeTo"
             placeholder="New York, EEUU"
-            value=<?=$row[" place_to"]?> >
+            value="<?=$travel["place_to"]?>">
         </div>
         <div class="form-group col-md-4">
           <label for="budget">Budget</label>
@@ -45,7 +45,7 @@
             id="budget"
             name="budget"
             placeholder="1000€"
-            value=<?=$row[" budget"]?> >
+            value=<?=$travel["budget"]?> >
         </div>
       </div>
       <div class="form-row">
@@ -58,7 +58,7 @@
             id="dateFrom"
             name="dateFrom"
             placeholder="2020-01-01"
-            value=<?=$row[" date_from"]?> >
+            value="<?=$travel["date_from"]?>">
         </div>
         <div class="form-group col-md-4">
           <label for="dateTo">Date To</label>
@@ -69,20 +69,21 @@
             id="dateTo"
             name="dateTo"
             placeholder="2020-01-01"
-            value=<?= $row[" date_to"] ?> >
+            value=<?= $travel["date_to"] ?> >
         </div>
         <div class="form-group col-md-4">
-          <label for="employees">Select Employee</label>
+          <label for="employees">Employees</label>
           <select
             readonly
             multiple
             class="form-control"
             id="employees"
             name="employees[]">
-            <?php join(" ", array_map(function($employee) {
+            <?php
+            echo join("", array_map(function($employee) {
               return
                 "<option value=".$employee['id'].">
-                  " . $employee['first_name'] ." ". $employee['last_name'] ."
+                " . $employee['first_name'] ." ". $employee['last_name'] ."
                 </option>";
             }, $employees )) ?>
           </select>
@@ -95,7 +96,7 @@
           class="form-control"
           id="reason"
           name="reason"
-          rows="3"><?= $row["reason"] ?></textarea>
+          rows="3"><?= $travel["reason"] ?></textarea>
       </div>
       <a href="index.php?controller=travel&action=displayDashboard" class="btn btn-secondary">Back</a>
     </form>

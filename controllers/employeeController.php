@@ -1,13 +1,9 @@
 <?php
 
 require_once MODELS . "employeeModel.php";
-require_once VIEWS . "employee/employeeDashboard.php";
-require_once VIEWS . "error/error.php";
+require CONTROLLERS . "errorController.php";
 
 if (isset($_GET['action']) && function_exists($_GET['action'])) {
-    if(isset($_GET['error'])) {
-       echoError($_GET['error']);
-    }
     call_user_func($_GET['action']);
 } else {
     error($errorMsg);
@@ -16,15 +12,18 @@ if (isset($_GET['action']) && function_exists($_GET['action'])) {
 function displayDashboard()
 {
     $employees = getAll();
-    echoEmployeeDashboard($employees);
+    require VIEWS . "employee/employeeDashboard.php";
 }
 
 
 function displayEmployee()
 {
     $employee = getById($_GET['id']);
+    if (!$employee) {
+        error(1);
+    }
     $travels = getTravelsForEmployee($_GET['id']);
-    require_once VIEWS . "employee/employee.php";
+    require VIEWS . "employee/employee.php";
 }
 
 
@@ -62,10 +61,4 @@ function editEmployee()
         $data = json_decode(file_get_contents('php://input'), true);
         editById($data);
     }
-}
-
-function error($errorMsg, $redirectUrl = "index.php?controller=employee&action=displayDashboard")
-{
-    $errorMsg = urlencode($errorMsg);
-    header("Location: $redirectUrl&error=$errorMsg");
 }

@@ -1,10 +1,7 @@
 <?php
 
 require_once MODELS . "travelModel.php";
-require_once VIEWS . "travel/travelDashboard.php";
-require_once VIEWS . "travel/travel.php";
 
-/* ~~~ CONTROLLER FUNCTIONS ~~~ */
 
 if (isset($_GET['action']) && function_exists($_GET['action'])) {
   call_user_func($_GET['action']);
@@ -12,21 +9,20 @@ if (isset($_GET['action']) && function_exists($_GET['action'])) {
   error($errorMsg);
 }
 
-// * This function calls the corresponding model function and includes the corresponding view
 
 function displayDashboard()
 {
   $travels = getAll();
   $employees = getEmployees();
-  echoTravelsDashboard($travels, $employees);
+  require VIEWS . "travel/travelDashboard.php";
 }
 
 
 function displaytravel()
 {
   $travel = getById($_GET['id']);
-  $travelEmployees = getEmployeesForTravel($_GET['id']);
-  echoTravel($travel, $travelEmployees);
+  $employees = getEmployeesForTravel($_GET['id']);
+  require VIEWS . "travel/travel.php";
 }
 
 
@@ -51,12 +47,4 @@ function deleteTravel()
 {
   deleteById($_GET['id']);
   header("Location: index.php?controller=travel&action=displayDashboard");
-}
-
-// * This function includes the error view with a message
-
-function error($errorMsg)
-{
-  require_once VIEWS . "/error/error.php";
-  echoError($errorMsg);
 }

@@ -47,3 +47,9 @@ textarea.form-control[readonly] {
 a {
     cursor: pointer;
 }
+
+.error-msg {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
