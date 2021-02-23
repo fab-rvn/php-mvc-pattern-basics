@@ -6,7 +6,7 @@ if (employeeEditForm) {
     const value = Object.fromEntries(formData.entries());
     axios
       .put("index.php?controller=employee&action=editEmployee&id=$id&modify=true", value)
-      .then(() => window.location.href = "index.php?controller=employee&action=displayEmployees")
+      .then(() => window.location.href = "index.php?controller=employee&action=displayDashboard")
   })
 }
 console.log(employeeEditForm);
@@ -19,7 +19,7 @@ if (travelEditForm) {
     const value = Object.fromEntries(formData.entries());
     axios
       .put("index.php?controller=travel&action=editTravel&id=$id&modify=true", value)
-      .then(() => window.location.href = "index.php?controller=travel&action=displayTravels")
+      .then(() => window.location.href = "index.php?controller=travel&action=displayDashboard")
   })
 }
 console.log(travelEditForm);

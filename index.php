@@ -9,12 +9,8 @@ include_once "config/constants.php";
 // TODO Implement the logic to include the controller passed by the URL dynamically
 // In the event that the controller passed by URL does not exist, you must show the error view.
 
-readfile('./assets/html/header.html');
-
 if (isset($_GET['controller'])) {
   require(CONTROLLERS . $_REQUEST['controller'] . "Controller.php");
 } else {
   include_once "./views/main/main.php";
 }
-
-readfile('./assets/html/footer.html');

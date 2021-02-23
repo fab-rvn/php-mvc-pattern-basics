@@ -8,7 +8,6 @@ define('DATABASE', "employees");
 function connectionDB()
 {
     $conn = new mysqli(HOST, USERNAME, PASSWORD, DATABASE);
-    // $conn = new mysqli("127.0.0.1", "faber", "userpass", "employeesDB");
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }

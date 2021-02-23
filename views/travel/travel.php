@@ -1,80 +1,83 @@
 <?php
 
-function renderTravel($row, $employees)
+function echoTravel($row, $employees)
 {
-  echo (isset($_GET['id']) ?
-    '<h2 class"mb-3">Travel Details Page</h2>' :
-    '<h2>Add Travel</h2>');
+  echo '<!doctype html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" href="./assets/css/style.css">
+      <title>MVC Basic</title>
+    </head>
+    <body>
+      <div class="container mt-2">
+    <h2 class"mb-3">Travel Details Page</h2>';
 
   echo
   '
-    <form 
-      travel
-      class="'.(isset($_GET['modify']) ? 'edit' : '').'" 
-      action="index.php?controller=travel&action=createTravel" 
-      method="POST"
-      >
+    <form>
       <div class="form-row">
-        <input hidden value='.$_GET['id'].' name="id" type="number"></input>
         <div class="form-group col-md-4">
           <label for="placeFrom">From</label>
           <input
-            '.(isset($_GET['modify']) ? "" : "readonly").'
+          readonly
             type="text"
             class="form-control"
             id="placeFrom"
             name="placeFrom"
             placeholder="Barcelona, Spain"
-            value="'. (isset($_GET['id']) ? $row["place_from"] : "") .'">
+            value="'. $row["place_from"] .'">
         </div>
         <div class="form-group col-md-4">
           <label for="placeTo">Destination</label>
           <input
-            '.(isset($_GET['modify']) ? "" : "readonly").'
+            readonly
             type="text"
             class="form-control"
             id="placeTo"
             name="placeTo"
             placeholder="New York, EEUU"
-            value="'. (isset($_GET['id']) ? $row["place_to"] : "") .'">
+            value="'. $row["place_to"] .'">
         </div>
         <div class="form-group col-md-4">
           <label for="budget">Budget</label>
           <input
-            '.(isset($_GET['modify']) ? "" : "readonly").'
+          readonly
             type="text"
             class="form-control"
             id="budget" name="budget"
             placeholder="1000€"
-            value="'. (isset($_GET['id']) ? $row["budget"] : "") .'">
+            value="'. $row["budget"] .'">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="dateFrom">Date From</label>
           <input type="text"
-            '.(isset($_GET['modify']) ? "" : "readonly").'
+          readonly
             class="form-control"
             id="dateFrom"
             name="dateFrom"
             placeholder="2020-01-01"
-            value="'. (isset($_GET['id']) ? $row["date_from"] : "") .'">
+            value="'. $row["date_from"] .'">
         </div>
         <div class="form-group col-md-4">
           <label for="dateTo">Date To</label>
           <input
-            '.(isset($_GET['modify']) ? "" : "readonly").'
+          readonly
             type="text"
             class="form-control"
             id="dateTo"
             name="dateTo"
             placeholder="2020-01-01"
-            value="'. (isset($_GET['id']) ? $row["date_to"] : "") .'">
+            value="'. $row["date_to"] . '">
         </div>
         <div class="form-group col-md-4">
           <label for="employees">Select Employee</label>
             <select
-              '.(isset($_GET['modify']) ? "" : "readonly").'
+            readonly
               multiple
               class="form-control"
               id="employees"
@@ -91,15 +94,21 @@ function renderTravel($row, $employees)
       <div class="form-group">
         <label for="reason">Reason</label>
         <textarea
-          '.(isset($_GET['modify']) ? "" : "readonly").'
+        readonly
           class="form-control"
           id="reason"
           name="reason"
-          rows="3"
-          placeholder="Travel Motivation">'. (isset($_GET['id']) ? $row["reason"] : "") .'</textarea>
+          rows="3">'. $row["reason"] .'</textarea>
       </div>
-      <button type="submit" class="btn btn-success mr-2">Submit</button>
-      <a href="index.php?controller=travel&action=displayTravels" class="btn btn-secondary">Back</a>
+      <a href="index.php?controller=travel&action=displayDashboard" class="btn btn-secondary">Back</a>
     </form>
   ';
+  echo '    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+    <script src="./assets/js/utils.js"></script>
+  </body>
+  </html>';
 }

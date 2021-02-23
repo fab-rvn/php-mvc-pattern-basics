@@ -3,69 +3,48 @@
 require_once MODELS . "employeeModel.php";
 require_once VIEWS . "employee/employeeDashboard.php";
 require_once VIEWS . "employee/employee.php";
-
-/* ~~~ CONTROLLER FUNCTIONS ~~~ */
+require_once VIEWS . "error/error.php";
 
 if (isset($_GET['action']) && function_exists($_GET['action'])) {
+    if(isset($_GET['error'])) {
+       echoError($_GET['error']);
+    }
     call_user_func($_GET['action']);
 } else {
     error($errorMsg);
 }
 
-// * This function calls the corresponding model function and includes the corresponding view
-
-function displayEmployees()
+function displayDashboard()
 {
-    $result = getAll();
-
-    if ($result->num_rows > 0) {
-        renderEmployeeDashboard($result);
-    } else {
-        error("Page was not found");
-    }
+    $employees = getAll();
+    echoEmployeeDashboard($employees);
 }
 
 
-function getEmployee()
+function displayEmployee()
 {
-    $result = getById($_GET['id']);
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        renderEmployee($row);
-    } else {
-        error("Employee was not found!");
-    }
+    $employee = getById($_GET['id']);
+    $travels = getTravelsForEmployee($_GET['id']);
+    echoEmployee($employee, $travels);
 }
 
 
 function createEmployee()
 {
-    if ($_SERVER['REQUEST_METHOD'] == "GET") {
-
-        renderEmployee();
-
-    } elseif ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-        $requiredField = array('fistName', 'lastName', 'birthday', 'hiredDate', 'jobTitle', 'salary');
-        $error = false;
-
-        foreach ($requiredField as $field) {
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        $requiredFields = array('firstName', 'lastName', 'birthday', 'hiredDate', 'jobTitle', 'salary');
+        foreach ($requiredFields as $field) {
             if (empty($_POST[$field])) {
-                $error = true;
-            } else {
-                $error = false;
+                error("Cannot create employee with empty ".$field."");
+                die();
             }
         }
 
-        if (!$error) {
-
-            insertNew($_POST);
-            displayEmployees();
-
+        $result = insertNew($_POST);
+        if($result) {
+            header("Location: index.php?controller=employee&action=displayDashboard");
         } else {
-            error("All field are required!");
-            header("Refresh:2.0; url=index.php?controller=employee&action=createEmployee");
+            error("Cannot create employee");
         }
     }
 }
@@ -74,30 +53,20 @@ function createEmployee()
 function deleteEmployee()
 {
     deleteById($_GET['id']);
-    displayEmployees();
+    header("Location: index.php?controller=employee&action=displayDashboard");
 }
 
 
 function editEmployee()
 {
-    $result = getById($_GET['id']);
-
     if ($_SERVER['REQUEST_METHOD'] == "PUT") {
         $data = json_decode(file_get_contents('php://input'), true);
-        if(editById($data)) {
-            http_response_code(200);
-        } else {
-            http_response_code(400);
-        }
-    } else {
-        renderEmployee($result->fetch_assoc());
+        editById($data);
     }
 }
 
-// * This function includes the error view with a message
-
-function error($errorMsg)
+function error($errorMsg, $redirectUrl = "index.php?controller=employee&action=displayDashboard")
 {
-    require_once VIEWS . "/error/error.php";
-    renderError($errorMsg);
+    $errorMsg = urlencode($errorMsg);
+    header("Location: $redirectUrl&error=$errorMsg");
 }

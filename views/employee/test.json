@@ -1,0 +1,38 @@
+[
+	{
+		"id": "1",
+		"first_name": "Fabrizio",
+		"last_name": "Ervini",
+		"birth_date": "1991-12-30",
+		"hired_date": "2020-01-20",
+		"salary": "40000",
+		"job_title": "CEO"
+	},
+	{
+		"id": "2",
+		"first_name": "Pablo",
+		"last_name": "Caravaca",
+		"birth_date": "1991-12-30",
+		"hired_date": "2020-01-20",
+		"salary": "40000",
+		"job_title": "CEO"
+	},
+	{
+		"id": "3",
+		"first_name": "Fulanito          ",
+		"last_name": "Fulano          ",
+		"birth_date": "1992-04-23",
+		"hired_date": "2020-03-16",
+		"salary": "25000",
+		"job_title": "Engineer          "
+	},
+	{
+		"id": "4",
+		"first_name": "Menganillo          ",
+		"last_name": "Mengano             ",
+		"birth_date": "1992-03-12",
+		"hired_date": "2020-03-14",
+		"salary": "25000",
+		"job_title": "Engineer                              "
+	}
+]

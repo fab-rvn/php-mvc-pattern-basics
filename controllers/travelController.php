@@ -14,70 +14,28 @@ if (isset($_GET['action']) && function_exists($_GET['action'])) {
 
 // * This function calls the corresponding model function and includes the corresponding view
 
-function displayTravels()
+function displayDashboard()
 {
-  $result = getAll();
-
-  if ($result->num_rows > 0) {
-    renderTravelsDashboard($result);
-  } else {
-    error("Page was not found");
-  }
+  $travels = getAll();
+  $employees = getEmployees();
+  echoTravelsDashboard($travels, $employees);
 }
 
 
-function getTravel()
+function displaytravel()
 {
-  $result = getById($_GET['id']);
+  $travel = getById($_GET['id']);
   $travelEmployees = getEmployeesForTravel($_GET['id']);
-
-  if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    renderTravel($row, $travelEmployees);
-  } else {
-    error("Travel was not found!");
-  }
+  echoTravel($travel, $travelEmployees);
 }
 
 
 function createTravel()
 {
-  if ($_SERVER['REQUEST_METHOD'] == "GET") {
-    $employees = getEmployees();
-    renderTravel("", $employees);
-
-  } elseif ($_SERVER['REQUEST_METHOD'] == "POST") {
-
-    $requiredField = array('dateFrom', 'dateTo', 'placeFrom', 'placeTo', 'budget', 'reason');
-    $error = false;
-
-    foreach ($requiredField as $field) {
-      if (empty($_POST[$field])) {
-        $error = true;
-      } else {
-        $error = false;
-      }
-    }
-
-    if (!$error) {
-
-      $newTravel = array(
-        'date_from' => $_POST['dateFrom'],
-        'date_to' => $_POST['dateTo'],
-        'place_from' => $_POST['placeFrom'],
-        'place_to' => $_POST['placeTo'],
-        'budget' => $_POST['budget'],
-        'reason' => $_POST['reason']
-      );
-
-      $travelId = insertNew($newTravel);
-      insertEmnployeesForTravel($travelId, $_POST['employees']);
-      displayTravels();
-
-    } else {
-      error("All field are required!");
-      header("Refresh:2.0; url=index.php?controller=travel&action=createTravel");
-    }
+  if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $travelId = insertNew($_POST);
+    insertEmnployeesForTravel($travelId, $_POST['employees']);
+    header("Location: index.php?controller=travel&action=displayDashboard");
   }
 }
 
@@ -85,21 +43,14 @@ function editTravel()
 {
     if ($_SERVER['REQUEST_METHOD'] == "PUT") {
         $data = json_decode(file_get_contents('php://input'), true);
-        if(editById($data)) {
-            http_response_code(200);
-        } else {
-            http_response_code(400);
-        }
-    } else {
-        $result = getById($_GET['id']);
-        renderTravel($result->fetch_assoc(), array());
+        editById($data);
     }
 }
 
 function deleteTravel()
 {
   deleteById($_GET['id']);
-  displayTravels();
+  header("Location: index.php?controller=travel&action=displayDashboard");
 }
 
 // * This function includes the error view with a message
@@ -107,5 +58,5 @@ function deleteTravel()
 function error($errorMsg)
 {
   require_once VIEWS . "/error/error.php";
-  renderError($errorMsg);
+  echoError($errorMsg);
 }
