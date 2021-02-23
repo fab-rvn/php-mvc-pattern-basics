@@ -2,7 +2,6 @@
 
 require_once MODELS . "employeeModel.php";
 require_once VIEWS . "employee/employeeDashboard.php";
-require_once VIEWS . "employee/employee.php";
 require_once VIEWS . "error/error.php";
 
 if (isset($_GET['action']) && function_exists($_GET['action'])) {
@@ -25,7 +24,7 @@ function displayEmployee()
 {
     $employee = getById($_GET['id']);
     $travels = getTravelsForEmployee($_GET['id']);
-    echoEmployee($employee, $travels);
+    require_once VIEWS . "employee/employee.php";
 }
 
 
