@@ -2,13 +2,12 @@
 
 require_once MODELS . "travelModel.php";
 
-
 if (isset($_GET['action']) && function_exists($_GET['action'])) {
   call_user_func($_GET['action']);
 } else {
-  error($errorMsg);
+  header("Location: index.php?controller=employee&action=displayDashboard&error=noAction");
+  die();
 }
-
 
 function displayDashboard()
 {
@@ -17,10 +16,13 @@ function displayDashboard()
   require VIEWS . "travel/travelDashboard.php";
 }
 
-
 function displaytravel()
 {
   $travel = getById($_GET['id']);
+  if (!$travel) {
+    header("Location: index.php?controller=employee&action=displayDashboard&error=noTravel");
+    die();
+  }
   $employees = getEmployeesForTravel($_GET['id']);
   require VIEWS . "travel/travel.php";
 }
@@ -29,6 +31,15 @@ function displaytravel()
 function createTravel()
 {
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+    $requiredFields = array('dateFrom', 'dateTo', 'placeFrom', 'placeTo', 'budget', 'employees');
+    foreach ($requiredFields as $field) {
+        if (empty($_POST[$field])) {
+            header("Location: index.php?controller=travel&action=displayDashboard&error=emptyFields");
+            die();
+        }
+    }
+
     $travelId = insertNew($_POST);
     insertEmnployeesForTravel($travelId, $_POST['employees']);
     header("Location: index.php?controller=travel&action=displayDashboard");
@@ -37,10 +48,10 @@ function createTravel()
 
 function editTravel()
 {
-    if ($_SERVER['REQUEST_METHOD'] == "PUT") {
-        $data = json_decode(file_get_contents('php://input'), true);
-        editById($data);
-    }
+  if ($_SERVER['REQUEST_METHOD'] == "PUT") {
+    $data = json_decode(file_get_contents('php://input'), true);
+    editById($data);
+  }
 }
 
 function deleteTravel()

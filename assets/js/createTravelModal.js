@@ -1,9 +1,9 @@
-import { openModal } from "./modal.js";
+import { openModal } from './modal.js';
 
 export function createTravelModal(employees) {
-    const modal = document.createElement('div');
-    modal.className = 'employee-modal centered-modal';
-    modal.innerHTML = `
+	const modal = document.createElement('div');
+	modal.className = 'employee-modal centered-modal';
+	modal.innerHTML = `
     <form 
         travel
         action="index.php?controller=travel&action=createTravel" 
@@ -23,7 +23,6 @@ export function createTravelModal(employees) {
         <div class="form-group col-md-6">
             <label for="placeFrom">From</label>
             <input
-            required
             type="text"
             class="form-control"
             id="placeFrom"
@@ -33,7 +32,6 @@ export function createTravelModal(employees) {
         <div class="form-group col-md-6">
             <label for="placeTo">Destination</label>
             <input
-            required
             type="text"
             class="form-control"
             id="placeTo"
@@ -45,7 +43,6 @@ export function createTravelModal(employees) {
         <div class="form-group col-md-6">
             <label for="dateFrom">Date From</label>
             <input 
-            required
             type="text"
             class="form-control"
             id="dateFrom"
@@ -55,7 +52,6 @@ export function createTravelModal(employees) {
         <div class="form-group col-md-6">
             <label for="dateTo">Date To</label>
             <input
-            required
             type="text"
             class="form-control"
             id="dateTo"
@@ -67,18 +63,17 @@ export function createTravelModal(employees) {
             <div class="form-group col">
             <label for="employees">Select Employee</label>
             <select
-                required
                 multiple
                 class="form-control"
                 id="employees"
                 name="employees[]">        
-                ${
-                    employees.map(employee=> {
-                        return `<option value="${employee.id}">
+                ${employees
+					.map((employee) => {
+						return `<option value="${employee.id}">
                         ${employee.first_name} ${employee.last_name}
-                        </option>`
-                    }).join()
-                }
+                        </option>`;
+					})
+					.join()}
             </select>
         </div>
         </div>
@@ -92,9 +87,12 @@ export function createTravelModal(employees) {
             placeholder="Travel Motivation"></textarea>
         </div>
         <button type="submit" class="btn btn-success mr-2">Create</button>
-        <a href="index.php?controller=travel&action=displayDashboard" class="btn btn-secondary">Back</a>
-    </form>`
-    openModal({
-        node: modal
-    });
+        <button id="closeButton" class="btn btn-secondary">Back</button>
+    </form>`;
+	const closeModal = openModal({
+		node: modal,
+	});
+
+	const closeButton = modal.querySelector('#closeButton');
+	closeButton.addEventListener('click', closeModal);
 }

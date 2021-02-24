@@ -6,7 +6,8 @@ require CONTROLLERS . "errorController.php";
 if (isset($_GET['action']) && function_exists($_GET['action'])) {
     call_user_func($_GET['action']);
 } else {
-    error($errorMsg);
+    header("Location: index.php?controller=employee&action=displayDashboard&error=noAction");
+    die();
 }
 
 function displayDashboard()
@@ -20,7 +21,8 @@ function displayEmployee()
 {
     $employee = getById($_GET['id']);
     if (!$employee) {
-        error(1);
+        header("Location: index.php?controller=employee&action=displayDashboard&error=noEmp");
+        die();
     }
     $travels = getTravelsForEmployee($_GET['id']);
     require VIEWS . "employee/employee.php";
@@ -33,16 +35,17 @@ function createEmployee()
         $requiredFields = array('firstName', 'lastName', 'birthday', 'hiredDate', 'jobTitle', 'salary');
         foreach ($requiredFields as $field) {
             if (empty($_POST[$field])) {
-                error("Cannot create employee with empty ".$field."");
+                header("Location: index.php?controller=employee&action=displayDashboard&error=emptyFields");
                 die();
             }
         }
 
         $result = insertNew($_POST);
-        if($result) {
+        if ($result) {
             header("Location: index.php?controller=employee&action=displayDashboard");
         } else {
-            error("Cannot create employee");
+            header("Location: index.php?controller=employee&action=displayDashboard&error=createEmp");
+            die();
         }
     }
 }

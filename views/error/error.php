@@ -1,6 +1,6 @@
 
 <div class="alert alert-danger alert-dismissible fade show error-msg" id="error">
-  <strong>Error!</strong> <?= decodeError($_GET['error']) ?>
+  <strong>Error!</strong> <?= $errorMsg ?>
   <button type="button" class="close" data-dismiss="alert">&times;</button>
 </div>
 

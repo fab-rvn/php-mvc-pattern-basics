@@ -1,9 +1,9 @@
-import { openModal } from "./modal.js";
+import { openModal } from './modal.js';
 
 export function createEmpModal() {
-    const modal = document.createElement('div');
-    modal.className = 'employee-modal centered-modal';
-    modal.innerHTML = `<form
+	const modal = document.createElement('div');
+	modal.className = 'employee-modal centered-modal';
+	modal.innerHTML = `<form
     action="index.php?controller=employee&action=createEmployee"
     method="POST">
     <div class="form-row">
@@ -67,9 +67,12 @@ export function createEmpModal() {
       </div>
     </div>
     <button type="submit" class="btn btn-success mr-2">Create</button>
-    <a href="index.php?controller=employee&action=displayDashboard" class="btn btn-secondary">Back</a>
-  </form>`
-    openModal({
-        node: modal
-    });
+    <button id="closeButton" class="btn btn-secondary">Back</button>
+  </form>`;
+	const closeModal = openModal({
+		node: modal,
+	});
+
+	const closeButton = modal.querySelector('#closeButton');
+	closeButton.addEventListener('click', closeModal);
 }

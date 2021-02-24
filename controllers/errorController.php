@@ -1,22 +1,14 @@
 <?php
 
-function error($errorCode, $redirectUrl = "index.php" )
-{
-  header("Location: $redirectUrl?error=$errorCode");
-  die();
-}
+const ERROR_CODES = array(
+  "noController" => "No controller with this name",
+  "noAction" => "No action with this name",
+  "noEmp" => "No employee found",
+  "noTravel" => "No travel found",
+  "emptyFields" => "Empty fields found"
+);
 
-
-function decodeError($errorCode)
-{
-  if ($errorCode === 1) {
-    return "Employee was not found!";
-  }
-
-}
-
-
-function error404()
-{
-  require VIEWS . "error/error404.php";
+if(isset($_GET["error"])) {
+  $errorMsg = ERROR_CODES[$_GET["error"]];
+  include VIEWS . "error/error.php";
 }

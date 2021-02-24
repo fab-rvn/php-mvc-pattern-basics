@@ -1,9 +1,9 @@
-import { openModal } from "./modal.js";
+import { openModal } from './modal.js';
 
 export function editEmpModal(employee) {
-    const modal = document.createElement('div');
-    modal.className = 'employee-modal centered-modal';
-    modal.innerHTML = `<form>
+	const modal = document.createElement('div');
+	modal.className = 'employee-modal centered-modal';
+	modal.innerHTML = `<form>
     <div class="form-row">
         <input hidden name="id" value="${employee.id}">
       <div class="form-group col-md-6">
@@ -72,20 +72,25 @@ export function editEmpModal(employee) {
       </div>
     </div>
     <button type="submit" class="btn btn-success mr-2">Edit</button>
-    <a href="index.php?controller=employee&action=displayDashboard" class="btn btn-secondary">Back</a>
-  </form>`
-    const employeeEditForm = modal.querySelector('form');
-      if (employeeEditForm) {
-      employeeEditForm.addEventListener('submit', (event) => {
-          event.preventDefault();
-          const formData = new FormData(event.target);
-          const value = Object.fromEntries(formData.entries());
-          axios
-          .put("index.php?controller=employee&action=editEmployee", value)
-          .then(() => window.location.href = "index.php?controller=employee&action=displayDashboard")
-      })
-    }
-    openModal({
-        node: modal
-    });
+    <button id="closeButton" class="btn btn-secondary">Back</a>
+  </form>`;
+
+	const closeModal = openModal({
+		node: modal,
+	});
+
+	const employeeEditForm = modal.querySelector('form');
+	if (employeeEditForm) {
+		employeeEditForm.addEventListener('submit', (event) => {
+			event.preventDefault();
+			const formData = new FormData(event.target);
+			const value = Object.fromEntries(formData.entries());
+			axios
+				.put('index.php?controller=employee&action=editEmployee', value)
+				.then(() => (window.location.href = 'index.php?controller=employee&action=displayDashboard'));
+		});
+	}
+
+	const closeButton = modal.querySelector('#closeButton');
+	closeButton.addEventListener('click', closeModal);
 }

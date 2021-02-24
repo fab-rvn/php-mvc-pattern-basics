@@ -1,21 +1,19 @@
 <?php
 
 define("BASE_PATH", dirname(__FILE__));
-include_once "config/constants.php";
+include "config/constants.php";
 
 
 if (isset($_GET['controller'])) {
-  if (file_exists(CONTROLLERS . $_REQUEST['controller'] . "Controller.php")) {
-    require(CONTROLLERS . $_REQUEST['controller'] . "Controller.php");
+  $controllerPath = CONTROLLERS . $_REQUEST['controller'] . "Controller.php";
+  if (file_exists($controllerPath)) {
+    require $controllerPath;
   } else {
-    include_once "./views/error/error404.php";
+    header("Location: index.php?error=noController");
+    die();
   }
 } else {
-  include_once "./views/main/main.php";
+  include "./views/main/main.php";
 }
 
-if(isset($_GET['error'])) {
-  require(CONTROLLERS . "Controller.php");
-  $errorMsg = $_GET['error'];
-  require VIEWS . "error/error.php";
-}
+require_once CONTROLLERS . "errorController.php";
